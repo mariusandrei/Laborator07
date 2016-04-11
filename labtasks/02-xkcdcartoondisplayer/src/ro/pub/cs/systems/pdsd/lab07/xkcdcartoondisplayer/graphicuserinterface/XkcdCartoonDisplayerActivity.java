@@ -1,11 +1,24 @@
 package ro.pub.cs.systems.pdsd.lab07.xkcdcartoondisplayer.graphicuserinterface;
 
+import java.io.IOException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
 import ro.pub.cs.systems.pdsd.lab07.xkcdcartoondisplayer.R;
 import ro.pub.cs.systems.pdsd.lab07.xkcdcartoondisplayer.entities.XkcdCartoonInfo;
 import ro.pub.cs.systems.pdsd.xkcdcartoondisplayer.general.Constants;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -48,24 +61,46 @@ public class XkcdCartoonDisplayerActivity extends Activity {
 			// - create an instance of a ResponseHandler object
 			// - execute the request, thus obtaining the web page source code
 			
-			// 2. parse the web page source code
-			// - cartoon title: get the tag whose id equals "ctitle"
-			// - cartoon url
-			//   * get the first tag whose id equals "comic"
-			//   * get the embedded <img> tag
-			//   * get the value of the attribute "src"
-			//   * prepend the protocol: "http:"
-			// - cartoon content: get the input stream attached to the url and decode it into a Bitmap
-			// - previous cartoon address
-			//   * get the first tag whole rel attribute equals "prev"
-			//   * get the href attribute of the tag
-			//   * prepend the value with the base url: http://www.xkcd.com
-			//   * attach the previous button a click listener with the address attached
-			// - next cartoon address
-			//   * get the first tag whole rel attribute equals "next"
-			//   * get the href attribute of the tag
-			//   * prepend the value with the base url: http://www.xkcd.com
-			//   * attach the next button a click listener with the address attached
+				  HttpClient httpClient = new DefaultHttpClient();
+				  HttpGet httpGet = new HttpGet(urls[0]);
+				  
+				  ResponseHandler<String> responseHandler = new BasicResponseHandler();
+					
+					
+					
+					String asdf = "error";
+					try {
+						asdf = httpClient.execute(httpGet, responseHandler);
+					} catch (ClientProtocolException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
+					  // 2. parse the web page source code
+					// - cartoon title: get the tag whose id equals "ctitle"
+					 // - cartoon url
+					//   * get the first tag whose id equals "comic"
+					//   * get the embedded <img> tag
+					//   * get the value of the attribute "src"
+					//   * prepend the protocol: "http:"
+					// - cartoon content: get the input stream attached to the url and decode it into a Bitmap
+					// - previous cartoon address
+					//   * get the first tag whole rel attribute equals "prev"
+					//   * get the href attribute of the tag
+					//   * prepend the value with the base url: http://www.xkcd.com
+					//   * attach the previous button a click listener with the address attached
+					// - next cartoon address
+					//   * get the first tag whole rel attribute equals "next"
+					//   * get the href attribute of the tag
+					//   * prepend the value with the base url: http://www.xkcd.com
+					//   * attach the next button a click listener with the address attached  
+					  
+				
+		
+		
 			
 			return xkcdCartoonInfo;
 
